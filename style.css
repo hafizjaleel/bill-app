@@ -1,0 +1,246 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+@page { size: auto;  margin: 0mm; }
+
+.a4 {
+  width: 250mm; /* or 793.7px */
+  height: 275mm; /* or 1122.52px */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.border {
+  height: 95%;
+  width: 92%;
+  border: 1px solid black;
+  place-items: center;
+  position: relative;
+}
+
+.head {
+  text-align: center;
+  width: 40%;
+  height: auto;
+  font-weight: bold;
+}
+
+.head img {
+  margin-top: 20px;
+  width: 60%;
+  height: auto;
+}
+
+.head p {
+  margin: 0%;
+}
+
+.p1 {
+  font-size: 15px;
+}
+
+.p2 {
+  font-size: 18px;
+}
+
+.p3 {
+  font-size: 18px;
+}
+
+.p4 {
+  font-weight: normal;
+  font-size: 18px;
+}
+
+.date {
+  position: absolute;
+  top: 250px;
+  left: 10px;
+  font-size: 15px;
+  padding-top: 30px;
+}
+
+.date p {
+  margin: 0%;
+}
+
+.cdata {
+  position: absolute;
+  top: 300px;
+  left: 10px;
+  font-size: 15px;
+  padding-top: 30px;
+  display: flex;
+  grid-template-columns: 2, 1fr;
+  width: 100%;
+}
+
+.chead {
+  width: 30%;
+}
+
+.tablediv {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 500px;
+  width: 100%;
+}
+
+table {
+  width: 98%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  border: 1px solid black;
+  text-align: start;
+}
+
+th, td {
+  border: 1px solid black;
+  font-size: 15px;
+  text-align: center;
+}
+
+tr {
+  vertical-align: top;
+  border: none;
+}
+
+tr h4 {
+  font-size: 15px;
+  font-weight: normal;
+}
+
+.total {
+  font-weight: bold;
+  width: 40%;
+  position: absolute;
+  top: 750px;
+  right: 10px;
+  display: flex;
+}
+
+.sign {
+  width: 30%;
+  position: absolute;
+  top: 830px;
+  right: 50px;
+  font-size: 13px;
+}
+
+.branch {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  position: absolute;
+  top: 937px;
+  font-size: 15px;
+  text-align: justify;
+  font-weight: bold;
+  padding-left: 20pX;
+}
+.branch p {
+  margin: 0;
+}
+
+.footer {
+  position: absolute;
+  font-size: 7PX;
+  top: 60px;
+  text-align: center;
+  width: 100%;
+}
+
+.input-form {
+  background-color: #fff;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.input-form h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.input-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555;
+}
+
+.input-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.input-form button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.input-form button:hover {
+  background-color: #0056b3;
+}
+
+#printBillBtn {
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#printBillBtn:hover {
+  background-color: #218838;
+}
+
+@media print {
+  .input-form {
+    display: none;
+  }
+
+  #printBillBtn {
+    display: none;
+  }
+
+  input[type="text"],
+  input[type="date"],
+  input[type="number"] {
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+  }
+
+  label {
+    display: none;
+  }
+
+  button {
+    display: none;
+  }
+}

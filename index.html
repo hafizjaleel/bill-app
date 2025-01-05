@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safa Invoice</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <!-- Input Form -->
+  <div class="input-form">
+    <h2>Enter Bill Details</h2>
+    <label for="invoiceNo">Invoice No:</label>
+    <input type="text" id="invoiceNo" placeholder="Invoice Number" />
+    <label for="date">Date:</label>
+    <input type="date" id="date" />
+    <label for="customerName">Customer Name:</label>
+    <input type="text" id="customerName" placeholder="Customer Name" />
+    <label for="address">Address:</label>
+    <input type="text" id="address" placeholder="Address" />
+    <label for="phoneNo">Phone No:</label>
+    <input type="text" id="phoneNo" placeholder="Phone Number" />
+    <label for="itemName">Item Name:</label>
+    <input type="text" id="itemName" placeholder="Item Name" />
+    <label for="hsnCode">HSN Code:</label>
+    <input type="text" id="hsnCode" placeholder="HSN Code" />
+    <label for="gstRate">GST Rate (%):</label>
+    <input type="number" id="gstRate" placeholder="GST Rate" />
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" placeholder="Quantity" />
+    <label for="price">Price:</label>
+    <input type="number" id="price" placeholder="Price" />
+    <button id="addItemBtn">Add Item</button>
+    <button id="generateBillBtn">Generate Bill</button>
+    <button id="printBillBtn">Print Bill</button>
+  </div>
+
+  <!-- Invoice Design -->
+  <div class="a4" id="invoice">
+    <div class="border">
+      <div class="head">
+        <img src="logo.png" alt="" />
+        <p class="p1">POST OFFICE ROAD</p>
+        <p class="p2">AREEKODE</p>
+        <p class="p3">PHONE: 9061209211</p>
+        <p class="p4">GSTIN: 32BCPPA2930K1Z5</p>
+      </div>
+      <div class="date">
+        <p>INVOICE NO: <span id="invoiceNoDisplay"></span></p>
+        <p>DATE: <span id="dateDisplay"></span></p>
+      </div>
+      <div class="cdata">
+        <div class="chead">
+          <p>CUSTOMER NAME</p>
+          <p>ADDRESS</p>
+          <br />
+          <p>PHONE NO</p>
+        </div>
+        <div class="cfill">
+          <p>: <span id="customerNameDisplay"></span></p>
+          <p>: <span id="addressDisplay"></span></p>
+          <br />
+          <p>: <span id="phoneNoDisplay"></span></p>
+        </div>
+      </div>
+      <div class="tablediv">
+        <table id="billTable">
+          <tr>
+            <th rowspan="2" class="c1" style="width: 6.2%;">SL NO</th>
+            <th rowspan="2" class="c2" style="width: 20%;">ITEM NAME</th>
+            <th rowspan="2" class="c3" style="width: 10%;">HSN CODE</th>
+            <th rowspan="2" class="c4" style="width: 6.2%;">QTY</th>
+            <th rowspan="2" class="c5" style="width: 10%;">PRICE</th>
+            <th colspan="2" class="c6" style="width: 16.2%;">CGST</th>
+            <th colspan=" 2" class="c7" style="width: 16.2%;">SGST</th>
+            <th rowspan="2" class="c8" style="width: 10%;">TOTAL</th>
+          </tr>
+          <tr>
+            <th class="c9">%</th>
+            <th class="c10">AMT</th>
+            <th class="c11">%</th>
+            <th class="c12">AMT</th>
+          </tr>
+          <tbody id="itemRows">
+            <!-- Dynamic rows will be added here -->
+          </tbody>
+        </table>
+      </div>
+      <div class="total">
+        <p>NET AMOUNT: <span id="netAmountDisplay"></span></p>
+      </div>
+      <div class="sign">
+        <p>AUTHORISED SIGNATORY</p>
+      </div>
+      <div class="branch">
+        <div class="b1">
+            <p>CHEMMAD</p>
+            <P>9946620335</P>
+        </div>
+        <div class="b1">
+            <p>EDAVANNA</p>
+            <P>9605409211</P>
+        </div>
+        <div class="b1">
+            <p>PANDIKKAD</p>
+            <P>9645123311</P>
+        </div>
+        <div class="b1">
+            <p>NILAMBUR</p>
+            <P>7510209211</P>
+        </div>
+        <div class="b1">
+            <p>MANJERI</p>
+            <P>9072109211</P>
+        </div>
+      <div class="footer">
+        <p>*THIS IS A COMPUTER GENERATED INVOICE</p>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    const invoiceData = {
+      items: [],
+      netAmount: 0
+    };
+
+    document.getElementById('addItemBtn').addEventListener('click', function() {
+      const itemName = document.getElementById('itemName').value;
+      const hsnCode = document.getElementById('hsnCode').value;
+      const quantity = parseFloat(document.getElementById('quantity').value);
+      const price = parseFloat(document.getElementById('price').value);
+      const gstRate = parseFloat(document.getElementById('gstRate').value);
+
+      if (itemName && hsnCode && quantity && price && gstRate) {
+        const item = {
+          name: itemName,
+          hsnCode: hsnCode,
+          quantity: quantity,
+          price: price,
+          gstRate: gstRate
+        };
+        invoiceData.items.push(item);
+        updateInvoiceTable();
+        calculateNetAmount();
+      } else {
+        alert('Please fill all fields correctly.');
+      }
+    });
+
+    document.getElementById('generateBillBtn').addEventListener('click', function() {
+      document.getElementById('invoiceNoDisplay').innerText = document.getElementById('invoiceNo').value;
+      // document.getElementById('dateDisplay').innerText = document.getElementById('date').value;
+      const date = document.getElementById('date').value;
+const formattedDate = new Date(date).toLocaleDateString('en-GB');
+document.getElementById('dateDisplay').innerText = formattedDate;
+      document.getElementById('customerNameDisplay').innerText = document.getElementById('customerName').value;
+      document.getElementById('addressDisplay').innerText = document.getElementById('address').value;
+      document.getElementById('phoneNoDisplay').innerText = document.getElementById('phoneNo').value;
+    });
+
+    function updateInvoiceTable() {
+      const itemRows = document.getElementById('itemRows');
+      itemRows.innerHTML = ''; // Clear existing rows
+      invoiceData.items.forEach((item, index) => {
+        const totalPrice = item.quantity * item.price;
+        const cgst = item.gstRate / 2;
+        const cgstAmount = (totalPrice * cgst) / 100;
+        const sgstAmount = (totalPrice * cgst) / 100;
+        const totalAmount = totalPrice;
+
+        const row = `<tr style="height: 200px;">
+          <td>${index + 1}</td>
+          <td>${item.name}</td>
+          <td>${item.hsnCode}</td>
+          <td>${item.quantity}</td>
+          <td>${item.price.toFixed(2)}</td>
+          <td>${cgst.toFixed(2)}</td>
+          <td>${cgstAmount.toFixed(2)}</td>
+          <td>${cgst.toFixed(2)}</td>
+          <td>${sgstAmount.toFixed(2)}</td>
+          <td>${totalAmount.toFixed(2)}</td>
+        </tr>`;
+        itemRows.insertAdjacentHTML('beforeend', row);
+      });
+    }
+
+    function calculateNetAmount() {
+      invoiceData.netAmount = invoiceData.items.reduce((total, item) => {
+        const totalPrice = item.quantity * item.price;
+        const cgst = item.gstRate / 2;
+        const cgstAmount = (totalPrice * cgst) / 100;
+        const sgstAmount = (totalPrice * cgst) / 100;
+        return total + totalPrice;
+      }, 0);
+      document.getElementById('netAmountDisplay').innerText = invoiceData.netAmount.toFixed(2);
+    }
+
+    document.getElementById('printBillBtn').addEventListener('click', function() {
+      window.print();
+    });
+  </script>
+</body>
+</html>
