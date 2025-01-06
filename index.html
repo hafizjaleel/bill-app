@@ -167,30 +167,38 @@ document.getElementById('dateDisplay').innerText = formattedDate;
     });
 
     function updateInvoiceTable() {
-      const itemRows = document.getElementById('itemRows');
-      itemRows.innerHTML = ''; // Clear existing rows
-      invoiceData.items.forEach((item, index) => {
-        const totalPrice = item.quantity * item.price;
-        const cgst = item.gstRate / 2;
-        const cgstAmount = (totalPrice * cgst) / 100;
-        const sgstAmount = (totalPrice * cgst) / 100;
-        const totalAmount = totalPrice;
+  const itemRows = document.getElementById('itemRows');
+  itemRows.innerHTML = ''; // Clear existing rows
+  invoiceData.items.forEach((item, index) => {
+    const totalPrice = item.quantity * item.price;
+    const cgst = item.gstRate / 2;
+    const cgstAmount = (totalPrice * cgst) / 100;
+    const sgstAmount = (totalPrice * cgst) / 100;
+    const totalAmount = totalPrice;
 
-        const row = `<tr style="height: 200px;">
-          <td>${index + 1}</td>
-          <td>${item.name}<br><p style="font-size: 13px;">(${item.imei})</p></td>
-          <td>${item.hsnCode}</td>
-          <td>${item.quantity}</td>
-          <td>${item.price.toFixed(2)}</td>
-          <td>${cgst.toFixed(2)}</td>
-          <td>${cgstAmount.toFixed(2)}</td>
-          <td>${cgst.toFixed(2)}</td>
-          <td>${sgstAmount.toFixed(2)}</td>
-          <td>${totalAmount.toFixed(2)}</td>
-        </tr>`;
-        itemRows.insertAdjacentHTML('beforeend', row);
-      });
+    const row = `<tr style="height: 100px;">
+      <td>${index + 1}</td>
+      <td>${item.name}<br><p style="font-size: 13px;">${item.imei}</p></td>
+      <td>${item.hsnCode}</td>
+      <td>${item.quantity}</td>
+      <td>${item.price.toFixed(2)}</td>
+      <td>${cgst.toFixed(2)}</td>
+      <td>${cgstAmount.toFixed(2)}</td>
+      <td>${cgst.toFixed(2)}</td>
+      <td>${sgstAmount.toFixed(2)}</td>
+      <td>${totalAmount.toFixed(2)}</td>
+    </tr>`;
+    itemRows.insertAdjacentHTML('beforeend', row);
+  });
+  const rows = itemRows.children;
+  if (rows.length === 1) {
+    rows[0].style.height = '200px'; // Set height to 200px for the first row
+  } else {
+    for (let i = 0; i < rows.length; i++) {
+      rows[i].style.height = '100px'; // Set height to 100px for all rows
     }
+  }
+}
 
     function calculateNetAmount() {
       invoiceData.netAmount = invoiceData.items.reduce((total, item) => {
