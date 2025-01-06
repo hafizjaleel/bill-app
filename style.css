@@ -69,14 +69,6 @@ body {
   margin: 0%;
 }
 
-.imei{
-  position: absolute;
-  top: 590px;
-  left: 65px;
-  font-size: 13px;
-  text-align: center;
-  width: 20.5%;
-}
 .cdata {
   position: absolute;
   top: 300px;

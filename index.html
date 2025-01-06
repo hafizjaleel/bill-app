@@ -66,9 +66,6 @@
           <p>: <span id="phoneNoDisplay"></span></p>
         </div>
       </div>
-      <div class="imei" id="imeiDisplay">
-        
-      </div>
       <div class="tablediv">
         <table id="billTable">
           <tr>
@@ -134,6 +131,7 @@
 
     document.getElementById('addItemBtn').addEventListener('click', function() {
       const itemName = document.getElementById('itemName').value;
+      const imei = document.getElementById('imei').value;
       const hsnCode = document.getElementById('hsnCode').value;
       const quantity = parseFloat(document.getElementById('quantity').value);
       const price = parseFloat(document.getElementById('price').value);
@@ -142,6 +140,7 @@
       if (itemName && hsnCode && quantity && price && gstRate) {
         const item = {
           name: itemName,
+          imei: imei,
           hsnCode: hsnCode,
           quantity: quantity,
           price: price,
@@ -179,7 +178,7 @@ document.getElementById('dateDisplay').innerText = formattedDate;
 
         const row = `<tr style="height: 200px;">
           <td>${index + 1}</td>
-          <td>${item.name}</td>
+          <td>${item.name}<br><p style="font-size: 13px;">(${item.imei})</p></td>
           <td>${item.hsnCode}</td>
           <td>${item.quantity}</td>
           <td>${item.price.toFixed(2)}</td>
