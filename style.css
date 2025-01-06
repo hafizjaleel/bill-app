@@ -69,6 +69,14 @@ body {
   margin: 0%;
 }
 
+.imei{
+  position: absolute;
+  top: 590px;
+  left: 65px;
+  font-size: 13px;
+  text-align: center;
+  width: 20.5%;
+}
 .cdata {
   position: absolute;
   top: 300px;
@@ -130,7 +138,7 @@ tr h4 {
   position: absolute;
   top: 830px;
   right: 50px;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .branch {

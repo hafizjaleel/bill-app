@@ -23,12 +23,14 @@
     <input type="text" id="phoneNo" placeholder="Phone Number" />
     <label for="itemName">Item Name:</label>
     <input type="text" id="itemName" placeholder="Item Name" />
+    <label for="imei">IMEI/Serial No:</label>
+    <input type="text" id="imei" placeholder="Serial No" />
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" placeholder="Quantity" />
     <label for="hsnCode">HSN Code:</label>
     <input type="text" id="hsnCode" placeholder="HSN Code" />
     <label for="gstRate">GST Rate (%):</label>
     <input type="number" id="gstRate" placeholder="GST Rate" />
-    <label for="quantity">Quantity:</label>
-    <input type="number" id="quantity" placeholder="Quantity" />
     <label for="price">Price:</label>
     <input type="number" id="price" placeholder="Price" />
     <button id="addItemBtn">Add Item</button>
@@ -63,6 +65,9 @@
           <br />
           <p>: <span id="phoneNoDisplay"></span></p>
         </div>
+      </div>
+      <div class="imei" id="imeiDisplay">
+        
       </div>
       <div class="tablediv">
         <table id="billTable">
@@ -159,6 +164,7 @@ document.getElementById('dateDisplay').innerText = formattedDate;
       document.getElementById('customerNameDisplay').innerText = document.getElementById('customerName').value;
       document.getElementById('addressDisplay').innerText = document.getElementById('address').value;
       document.getElementById('phoneNoDisplay').innerText = document.getElementById('phoneNo').value;
+      document.getElementById('imeiDisplay').innerText = '(' + document.getElementById('imei').value + ')';
     });
 
     function updateInvoiceTable() {
